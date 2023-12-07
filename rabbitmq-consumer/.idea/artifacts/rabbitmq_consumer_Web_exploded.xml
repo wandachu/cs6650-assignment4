@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="rabbitmq-consumer:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/rabbitmq_consumer_Web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="rabbitmq-consumer/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="rabbitmq-consumer" />
+          <element id="directory" name="lib">
+            <element id="library" level="project" name="Maven: com.rabbitmq:amqp-client:5.20.0" />
+            <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.36" />
+          </element>
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
