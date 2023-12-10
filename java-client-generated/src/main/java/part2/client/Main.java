@@ -16,7 +16,7 @@ public class Main {
         String loadBalancer = "a4lb-1149834934.us-west-2.elb.amazonaws.com";
         String elasticIP = "54.203.240.37";
         MultithreadApi multithreadApi = new MultithreadApi(
-                10, 30, 2, elasticIP,
+                10, 30, 2, loadBalancer,
                 successCountGet, failureCountGet, successCountPost, failureCountPost);
         multithreadApi.startThreads();
     }

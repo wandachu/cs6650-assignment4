@@ -44,6 +44,7 @@ public class ReviewServlet extends HttpServlet {
         factory.setUsername("test");
         factory.setPassword("test");
 
+
         try {
             final Connection connection = factory.newConnection();
             System.out.println("INFO: RabbitMQ connection established");

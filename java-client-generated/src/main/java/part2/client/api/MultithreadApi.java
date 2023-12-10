@@ -26,6 +26,7 @@ public class MultithreadApi {
 //    private static final String BASE = ":8080/assignment4_Web_exploded";
     private static final String BASE = ":8080/assignment4";
     public static final int NUM_OF_CALL_PER_THREAD_WARM_UP = 100;
+    public static final int NUM_READ_THREADS = 3;
     private final File image;
     private final AlbumsProfile profile;
     private final int threadGroupSize;
@@ -104,9 +105,9 @@ public class MultithreadApi {
         ApiClient apiClient = new ApiClient();
         String url = "http://" + this.IPAddress + BASE;
         apiClient.setBasePath(url);
-        ReadReviewThread[] readReviewThreads = new ReadReviewThread[3];
+        ReadReviewThread[] readReviewThreads = new ReadReviewThread[NUM_READ_THREADS];
         long startTimeRead = System.currentTimeMillis();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < NUM_READ_THREADS; i++) {
             ReadReviewThread readReviewThread = new ReadReviewThread("ReadReviewThread" + i,
                     apiClient, this.queue, successCountGet, failureCountGet,  successCountPost);
             Thread newReadReviewThread = new Thread(readReviewThread);
