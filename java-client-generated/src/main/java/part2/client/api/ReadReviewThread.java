@@ -49,7 +49,7 @@ public class ReadReviewThread implements Runnable {
             if (isSuccessGet) {
                 this.successCountGet.incrementAndGet();
             } else {
-                System.out.println("There is one failure GET");
+                System.out.println("There is one failure GET for the id " + randomID);
                 this.failureCountGet.incrementAndGet();
             }
         }

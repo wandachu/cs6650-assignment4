@@ -22,6 +22,7 @@ import static io.swagger.client.utils.Utils.produceToQueue;
 
 public class MultithreadApi {
     public static final int MAX_RETRIES = 5;
+    private static final int NUM_READ_THREADS = 3;
     private static final int NUM_OF_PAIRS_OF_REQUESTS_PER_THREAD_ACTUAL_TEST = 100;
 //    private static final String BASE = ":8080/assignment4_Web_exploded";
     private static final String BASE = ":8080/assignment4";
@@ -92,21 +93,21 @@ public class MultithreadApi {
             }
         }
 
-        // After the first group is completed, start the 3 GET threads
+        // After the first group is completed, start the GET threads
         try {
             groupOneCompleted.await();
             float wallTimeFirstGroup = (System.currentTimeMillis() - startTime) / 1000f;
-            System.out.printf("First thread group has completed...It took %fs. Now starting the 3 GET threads.......\n", wallTimeFirstGroup);
+            System.out.printf("First thread group has completed...It took %fs. Now starting the %d GET threads.......\n", wallTimeFirstGroup, NUM_READ_THREADS);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        // Start the 3 GET threads
+        // Start the GET threads
         ApiClient apiClient = new ApiClient();
         String url = "http://" + this.IPAddress + BASE;
         apiClient.setBasePath(url);
-        ReadReviewThread[] readReviewThreads = new ReadReviewThread[3];
+        ReadReviewThread[] readReviewThreads = new ReadReviewThread[NUM_READ_THREADS];
         long startTimeRead = System.currentTimeMillis();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < NUM_READ_THREADS; i++) {
             ReadReviewThread readReviewThread = new ReadReviewThread("ReadReviewThread" + i,
                     apiClient, this.queue, successCountGet, failureCountGet,  successCountPost);
             Thread newReadReviewThread = new Thread(readReviewThread);
@@ -128,7 +129,7 @@ public class MultithreadApi {
         }
         long endTime = System.currentTimeMillis();
 
-        // Let the 3 threads to fully stop updating the atomicInteger variables
+        // Let the READ threads to fully stop updating the atomicInteger variables
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
