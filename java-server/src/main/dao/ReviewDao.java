@@ -1,6 +1,6 @@
 package main.dao;
 
-import main.DataSource;
+import main.ReadReplicaDataSource;
 import main.model.ReviewInfo;
 
 import java.sql.Connection;
@@ -11,52 +11,21 @@ import java.sql.Statement;
 public class ReviewDao {
     private static final String ALBUM_ID = "album_id";
     private static final String REVIEW = "review";
+    private static final String LIKE = "likes";
+    private static final String DISLIKE = "dislikes";
 
     private static final String SELECT_QUERY = "SELECT * FROM " + REVIEW + " WHERE " + ALBUM_ID + " = ";
-    private static final String MAX_QUERY = "SELECT MAX(" + ALBUM_ID + ") FROM " + REVIEW;
-
-    public static int getMaxKeyValue() {
-        Statement statement = null;
-        ResultSet resultSet = null;
-        try (Connection remoteConnection = DataSource.getConnection()) {
-            try {
-                statement = remoteConnection.createStatement();
-                resultSet = statement.executeQuery(MAX_QUERY);
-                if (resultSet.next()) {
-                    return resultSet.getInt(1);
-                }
-            } catch (SQLException e) {
-                System.err.println("Has SQLException error when retrieving record: " + e);
-                return 0;
-            } finally {
-                try {
-                    if (statement != null) {
-                        statement.close();
-                    }
-                    if (resultSet != null) {
-                        resultSet.close();
-                    }
-                } catch (SQLException e) {
-                    System.err.println("Has SQLException error when closing statement / resultSet: " + e);
-                }
-            }
-        }  catch (SQLException e) {
-            System.err.println("Has SQLException error when getting Database Connection Pooling: " + e);
-            return 0;
-        }
-        return 0;
-    }
 
     public static GetReviewResult getOneReviewFromDB(String albumID) {
         Statement statement = null;
         ResultSet resultSet = null;
-        try (Connection remoteConnection = DataSource.getConnection()) {
+        try (Connection remoteConnection = ReadReplicaDataSource.getConnection()) { // TODO
             try {
                 statement = remoteConnection.createStatement();
                 resultSet = statement.executeQuery(SELECT_QUERY + albumID);
                 if (resultSet.next()) {
-                    String likes = resultSet.getString("likes");
-                    String dislikes = resultSet.getString("dislikes");
+                    String likes = resultSet.getString(LIKE);
+                    String dislikes = resultSet.getString(DISLIKE);
                     return new GetReviewResult(new ReviewInfo(likes, dislikes), true);
                 } else {
                     return new GetReviewResult(null, true); // the item doesn't exist

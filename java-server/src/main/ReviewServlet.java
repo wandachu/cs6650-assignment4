@@ -26,8 +26,8 @@ import static main.utils.Utils.writeJsonToResponse;
 @WebServlet(name = "ReviewServlet", value = "/review/*")
 public class ReviewServlet extends HttpServlet {
     private final Gson gson = new Gson();
-    private static final String LIKE = "like";
-    private static final String DISLIKE = "dislike";
+    public static final String LIKE = "like";
+    public static final String DISLIKE = "dislike";
     private static final int LIKE_OR_DISLIKE_INDEX = 1;
     private static final int ID_PARAM_INDEX = 2;
     private static final int REVIEW_ID_PARAM_INDEX = 1;

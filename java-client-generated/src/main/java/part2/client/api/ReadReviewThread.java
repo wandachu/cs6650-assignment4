@@ -22,6 +22,7 @@ public class ReadReviewThread implements Runnable {
     private AtomicInteger failureCountGet;
     private AtomicInteger successCountPost; // to be used for generate randomID
     private static Random random = new Random();
+    private static final float BUFFER = 0.3f;
 
 
     public ReadReviewThread(String name, ApiClient apiClient, BlockingQueue<String[]> queue,
@@ -49,7 +50,7 @@ public class ReadReviewThread implements Runnable {
             if (isSuccessGet) {
                 this.successCountGet.incrementAndGet();
             } else {
-                System.out.println("There is one failure GET");
+                System.out.println("There is one failure GET for getting ID " + randomID);
                 this.failureCountGet.incrementAndGet();
             }
         }
@@ -62,7 +63,7 @@ public class ReadReviewThread implements Runnable {
     }
 
     private int getRandomID() {
-        int maxRange = this.successCountPost.get() / 4; // as we have 1 POST album with 3 POST review
+        int maxRange = (int) (this.successCountPost.get() / 4 * BUFFER); // as we have 1 POST album with 3 POST review with inconsistency buffer
         return random.nextInt(maxRange) + 1;
     }
 

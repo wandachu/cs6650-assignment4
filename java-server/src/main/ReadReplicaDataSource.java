@@ -12,11 +12,11 @@ public class ReadReplicaDataSource {
     private static HikariDataSource dataSource;
 
     static {
-        String dbName = System.getenv("READ_REPLICA_DB_NAME");
-        String userName = System.getenv("READ_REPLICA_USERNAME");
-        String password = System.getenv("READ_REPLICA_PASSWORD");
+        String dbName = System.getenv("RDS_DB_NAME");
+        String userName = System.getenv("RDS_USERNAME");
+        String password = System.getenv("RDS_PASSWORD");
         String hostname = System.getenv("READ_REPLICA_HOSTNAME");;
-        String port = System.getenv("READ_REPLICA_PORT");
+        String port = System.getenv("READ_REPLICA_RDS_PORT");
         String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
         config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         config.setJdbcUrl(jdbcUrl);

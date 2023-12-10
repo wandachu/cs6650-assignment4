@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
         String localhost = "localhost";
-        String loadBalancer = "updatedlb-973683078.us-west-2.elb.amazonaws.com";
+        String loadBalancer = "a4lb-1149834934.us-west-2.elb.amazonaws.com";
         String elasticIP = "54.203.240.37";
         MultithreadApi multithreadApi = new MultithreadApi(
                 10, 30, 2, elasticIP,

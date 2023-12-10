@@ -258,7 +258,6 @@ public class MultithreadApi {
                 boolean isSuccessPost = postRequestResultAlbumID != null;
                 if (isSuccessPost) {
                     // send POST review request
-                    // TODO: to uncomment
                     sendReviewPostRequest(likeApi, LIKE, postRequestResultAlbumID);
                     sendReviewPostRequest(likeApi, LIKE, postRequestResultAlbumID);
                     sendReviewPostRequest(likeApi, DISLIKE, postRequestResultAlbumID);
@@ -291,7 +290,7 @@ public class MultithreadApi {
                 isNotSuccess = false;
             } catch (ApiException ex) {
                 retryCount++;
-                System.out.printf("Get Exception. Retry %s %d for %s. Exception is %s\n", "POST", retryCount, Thread.currentThread().getName(), ex);
+                System.out.printf("Get Exception. Retry %s %d for %s. Exception is %s\n", "POST Review", retryCount, Thread.currentThread().getName(), ex);
             }
         }
     }
@@ -326,7 +325,7 @@ public class MultithreadApi {
                 isNotSuccess = false;
             } catch (ApiException ex) {
                 retryCount++;
-                System.out.printf("Get Exception. Retry %s %d for %s. Exception is %s\n", "POST", retryCount, Thread.currentThread().getName(), ex);
+                System.out.printf("Get Exception. Retry %s %d for %s. Exception is %s\n", "POST Album", retryCount, Thread.currentThread().getName(), ex);
             }
         }
         return requestResult; // if not successful, this is null
